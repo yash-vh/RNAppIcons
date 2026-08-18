@@ -10,6 +10,7 @@ import VariantEditor from "./components/VariantEditor";
 import Header from "./components/Header";
 import PlatformPreview from "./components/PlatformPreview";
 import PresetBar from "./components/PresetBar";
+import Switch from "@mui/material/Switch";
 
 type Theme = "light" | "dark";
 
@@ -259,19 +260,21 @@ export default function App() {
                       <span className="simple-item-check" aria-hidden="true">✓</span>
                       <span className="simple-item-name">{v.name}</span>
                       <div className="simple-item-actions">
-                        <label className="toggle-switch-label" title={v.enabled && enabledCount === 1 ? "At least one variant required" : undefined}>
-                          <input
-                            type="checkbox"
-                            className="sr-only"
-                            checked={v.enabled}
-                            disabled={v.enabled && enabledCount === 1}
-                            onChange={() => toggleEnabled(v.id)}
-                            aria-label={`Toggle ${v.name}`}
-                          />
-                          <span className={`toggle-switch toggle-switch-sm ${v.enabled ? "toggle-switch-active" : ""}`}>
-                            <span className="toggle-switch-thumb" />
-                          </span>
-                        </label>
+                        <Switch
+                          size="small"
+                          checked={v.enabled}
+                          disabled={v.enabled && enabledCount === 1}
+                          onChange={() => toggleEnabled(v.id)}
+                          slotProps={{ input: { "aria-label": `Toggle ${v.name}` } }}
+                          sx={{
+                            "& .MuiSwitch-switchBase.Mui-checked": {
+                              color: "var(--accent)",
+                            },
+                            "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+                              backgroundColor: "var(--accent)",
+                            },
+                          }}
+                        />
                         <button type="button" className="btn-link" onClick={() => setActiveVariantId(v.id)} aria-label={`Edit ${v.name}`}>
                           Edit
                         </button>

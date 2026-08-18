@@ -340,7 +340,7 @@ body {
 
 .workspace {
   display: grid;
-  grid-template-columns: 360px 1fr;
+  grid-template-columns: 420px 1fr;
   gap: 24px;
   align-items: start;
   width: 100%;
@@ -782,55 +782,64 @@ section:hover,
 .variant-editor-body {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-}
-@media (min-width: 500px) {
-  .variant-editor-body {
-    flex-direction: row;
-    align-items: flex-start;
-  }
+  gap: 16px;
+  width: 100%;
 }
 
 .variant-editor-preview {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
+  gap: 8px;
+  padding: 12px;
+  background: var(--panel-2);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
 }
+
 .variant-meta {
   display: flex;
   flex-direction: column;
   align-items: center;
   color: var(--subtle);
-  font-size: 12px;
+  font-size: 11px;
   line-height: 1.4;
+  text-align: center;
 }
 
 .variant-editor-controls {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
+  width: 100%;
 }
 
-.control-group {
+.mui-control-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 2px;
+  width: 100%;
 }
-.control-label {
+
+.mui-control-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   font-size: 13px;
   font-weight: 600;
   color: var(--text);
 }
-.control-value {
+
+.mui-control-title {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.mui-control-value {
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 700;
   color: var(--accent);
+  font-family: var(--font-mono);
 }
 
 .control-row {
@@ -1026,10 +1035,10 @@ section:hover,
 /* Realistic Asset-based Device Frames */
 .asset-device-container {
   position: relative;
-  width: 280px;
+  width: 290px;
   max-width: 100%;
   margin: 0 auto;
-  filter: drop-shadow(0 16px 28px rgba(0, 0, 0, 0.28));
+  filter: drop-shadow(0 20px 32px rgba(0, 0, 0, 0.35));
   user-select: none;
 }
 
@@ -1040,61 +1049,148 @@ section:hover,
   pointer-events: none;
 }
 
-/* Android Icon Slot: Directly above 'App Name' text label */
-.android-app-icon-slot {
-  position: absolute;
-  top: 27.2%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 13.5%;
-  aspect-ratio: 1 / 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
-}
-
-.android-app-icon-slot svg {
-  width: 100% !important;
-  height: 100% !important;
-  border-radius: 50%;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
-}
-
-/* iOS Icon Slot: Directly above 'App Name' in column 1 */
-.ios-app-icon-slot {
-  position: absolute;
-  top: 14.3%;
-  left: 17%;
-  width: 14.4%;
-  aspect-ratio: 1 / 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
-}
-
-.ios-app-icon-slot svg {
-  width: 100% !important;
-  height: 100% !important;
-  border-radius: 22.37%;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.28);
-}
-
-.placeholder-device-icon {
+/* Android Homescreen Icon Base */
+.android-home-icon-base {
   width: 100%;
   height: 100%;
-  background: var(--panel);
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.28);
+  position: relative;
+  overflow: hidden;
 }
-.round-placeholder {
+.android-home-icon-base.bg-white {
+  background: #ffffff;
+}
+.android-home-icon-base.bg-calc {
+  background: #3c4043;
+}
+.android-home-icon-base.bg-accent-gradient {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #ffffff;
+  font-size: 18px;
+}
+
+.calc-quadrants {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-items: center;
+}
+.calc-sym {
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 11px;
+  line-height: 1;
+}
+.calc-sym-blue {
+  background: #4285f4;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom-right-radius: 50%;
+}
+
+/* iOS Homescreen Icon Base */
+.ios-home-icon-base {
+  width: 100%;
+  height: 100%;
+  border-radius: 22.37%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.28);
+  overflow: hidden;
+}
+.ios-home-icon-base.bg-ios-blue {
+  background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%);
+}
+.ios-home-icon-base.bg-ios-gray {
+  background: linear-gradient(180deg, #94a3b8 0%, #64748b 100%);
+}
+.ios-home-icon-base.bg-white {
+  background: #ffffff;
+}
+.ios-home-icon-base.bg-accent-gradient {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #ffffff;
+  font-size: 18px;
+}
+
+/* Android Slot Coordinates */
+.android-slot {
+  position: absolute;
+  top: 27.2%;
+  width: 13.8%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.slot-phone {
+  left: 17.8%;
+  transform: translateX(-50%);
+}
+.slot-gmail {
+  left: 33.9%;
+  transform: translateX(-50%);
+}
+.slot-app-name {
+  left: 50%;
+  transform: translateX(-50%);
+}
+.slot-calc {
+  left: 66.1%;
+  transform: translateX(-50%);
+}
+.slot-play {
+  left: 82.2%;
+  transform: translateX(-50%);
+}
+
+.android-slot svg {
   border-radius: 50%;
 }
-.squircle-placeholder {
+
+/* iOS Slot Coordinates */
+.ios-slot {
+  position: absolute;
+  top: 14.3%;
+  width: 14.2%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.slot-ios-app {
+  left: 17.4%;
+  transform: translateX(-50%);
+}
+.slot-ios-mail {
+  left: 39.1%;
+  transform: translateX(-50%);
+}
+.slot-ios-camera {
+  left: 60.8%;
+  transform: translateX(-50%);
+}
+.slot-ios-photos {
+  left: 82.6%;
+  transform: translateX(-50%);
+}
+
+.ios-slot svg {
   border-radius: 22.37%;
 }
 

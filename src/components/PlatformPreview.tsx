@@ -27,7 +27,7 @@ const AppleIcon = () => (
   </svg>
 );
 
-/** Globe/Web SVG Icon */
+/** Globe SVG Icon */
 const GlobeIcon = () => (
   <svg
     width="16"
@@ -43,6 +43,114 @@ const GlobeIcon = () => (
     <line x1="2" y1="12" x2="22" y2="12" />
     <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
   </svg>
+);
+
+/** Google Phone App Icon */
+const GooglePhoneIcon = () => (
+  <div className="android-home-icon-base bg-white">
+    <svg width="60%" height="60%" viewBox="0 0 24 24" fill="#2563eb">
+      <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-2.2 2.2a15.053 15.053 0 0 1-6.59-6.59l2.2-2.21c.28-.26.36-.65.25-1.01A11.36 11.36 0 0 1 8.57 3.9c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.52c0-.55-.45-1-.99-1z" />
+    </svg>
+  </div>
+);
+
+/** Google Gmail App Icon */
+const GoogleGmailIcon = () => (
+  <div className="android-home-icon-base bg-white">
+    <svg width="62%" height="62%" viewBox="0 0 24 24">
+      <path
+        fill="#4285F4"
+        d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v.4l10 6.6 10-6.6V6z"
+      />
+      <path
+        fill="#EA4335"
+        d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5.3 8-5.3v10z"
+      />
+      <path
+        fill="#34A853"
+        d="M22 18c0 1.1-.9 2-2 2h-4v-8l6-4v10z"
+      />
+      <path
+        fill="#FBBC05"
+        d="M2 18c0 1.1.9 2 2 2h4v-8l-6-4v10z"
+      />
+      <path
+        fill="#EA4335"
+        d="M4 6l8 5.3L20 6H4z"
+      />
+    </svg>
+  </div>
+);
+
+/** Android Calculator Icon */
+const GoogleCalculatorIcon = () => (
+  <div className="android-home-icon-base bg-calc">
+    <div className="calc-quadrants">
+      <span className="calc-sym">−</span>
+      <span className="calc-sym">×</span>
+      <span className="calc-sym">+</span>
+      <span className="calc-sym calc-sym-blue">=</span>
+    </div>
+  </div>
+);
+
+/** Google Play Store App Icon */
+const GooglePlayStoreIcon = () => (
+  <div className="android-home-icon-base bg-white">
+    <svg width="58%" height="58%" viewBox="0 0 24 24">
+      <path
+        fill="#4285F4"
+        d="M3.61 2.21c-.37.4-.59.97-.59 1.69v16.2c0 .72.22 1.29.59 1.69l.09.08 9.08-9.08v-.22L4.01 3.25l-.4-.04z"
+      />
+      <path
+        fill="#FBBC05"
+        d="M15.75 14.54l-3-3v-.22l3-3 .07.04 3.56 2.02c1.02.58 1.02 1.52 0 2.1l-3.56 2.02-.07.04z"
+      />
+      <path
+        fill="#EA4335"
+        d="M15.82 14.5l-3.04-3.04-9.08 9.08c.34.36.9.4 1.55.03l10.57-6.07"
+      />
+      <path
+        fill="#34A853"
+        d="M15.82 9.5L5.25 3.43c-.65-.37-1.21-.33-1.55.03l9.08 9.08 3.04-3.04z"
+      />
+    </svg>
+  </div>
+);
+
+/** iOS Mail Icon */
+const IosMailIcon = () => (
+  <div className="ios-home-icon-base bg-ios-blue">
+    <svg width="60%" height="60%" viewBox="0 0 24 24" fill="white">
+      <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+    </svg>
+  </div>
+);
+
+/** iOS Camera Icon */
+const IosCameraIcon = () => (
+  <div className="ios-home-icon-base bg-ios-gray">
+    <svg width="60%" height="60%" viewBox="0 0 24 24" fill="white">
+      <circle cx="12" cy="12" r="3.2" />
+      <path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z" />
+    </svg>
+  </div>
+);
+
+/** iOS Photos Icon */
+const IosPhotosIcon = () => (
+  <div className="ios-home-icon-base bg-white">
+    <svg width="68%" height="68%" viewBox="0 0 24 24">
+      <circle cx="12" cy="7" r="3" fill="#ea4335" opacity="0.9" />
+      <circle cx="17" cy="12" r="3" fill="#fbbc05" opacity="0.9" />
+      <circle cx="12" cy="17" r="3" fill="#34a853" opacity="0.9" />
+      <circle cx="7" cy="12" r="3" fill="#4285f4" opacity="0.9" />
+      <circle cx="8.5" cy="8.5" r="2.8" fill="#ff6d00" opacity="0.85" />
+      <circle cx="15.5" cy="8.5" r="2.8" fill="#fabc05" opacity="0.85" />
+      <circle cx="15.5" cy="15.5" r="2.8" fill="#46bdc6" opacity="0.85" />
+      <circle cx="8.5" cy="15.5" r="2.8" fill="#7baaf7" opacity="0.85" />
+    </svg>
+  </div>
 );
 
 export default function PlatformPreview({
@@ -107,7 +215,18 @@ export default function PlatformPreview({
               alt="Android phone frame preview"
               className="asset-device-img"
             />
-            <div className="android-app-icon-slot">
+            {/* Slot 1: Phone */}
+            <div className="android-slot slot-phone">
+              <GooglePhoneIcon />
+            </div>
+
+            {/* Slot 2: Gmail */}
+            <div className="android-slot slot-gmail">
+              <GoogleGmailIcon />
+            </div>
+
+            {/* Slot 3: App Name (Center User Icon) */}
+            <div className="android-slot slot-app-name">
               {androidVariant && imageSrc ? (
                 <ShapePreview
                   variant={androidVariant}
@@ -115,10 +234,20 @@ export default function PlatformPreview({
                   size={52}
                 />
               ) : (
-                <div className="placeholder-device-icon round-placeholder">
-                  🚀
+                <div className="android-home-icon-base bg-accent-gradient">
+                  ⚡
                 </div>
               )}
+            </div>
+
+            {/* Slot 4: Calculator */}
+            <div className="android-slot slot-calc">
+              <GoogleCalculatorIcon />
+            </div>
+
+            {/* Slot 5: Play Store */}
+            <div className="android-slot slot-play">
+              <GooglePlayStoreIcon />
             </div>
           </div>
         )}
@@ -130,18 +259,34 @@ export default function PlatformPreview({
               alt="iPhone device frame preview"
               className="asset-device-img"
             />
-            <div className="ios-app-icon-slot">
+            {/* Column 1: App Name */}
+            <div className="ios-slot slot-ios-app">
               {iosVariant && imageSrc ? (
                 <ShapePreview
                   variant={iosVariant}
                   imageSrc={imageSrc}
-                  size={56}
+                  size={54}
                 />
               ) : (
-                <div className="placeholder-device-icon squircle-placeholder">
-                  🚀
+                <div className="ios-home-icon-base bg-accent-gradient">
+                  ⚡
                 </div>
               )}
+            </div>
+
+            {/* Column 2: Mail */}
+            <div className="ios-slot slot-ios-mail">
+              <IosMailIcon />
+            </div>
+
+            {/* Column 3: Camera */}
+            <div className="ios-slot slot-ios-camera">
+              <IosCameraIcon />
+            </div>
+
+            {/* Column 4: Photos */}
+            <div className="ios-slot slot-ios-photos">
+              <IosPhotosIcon />
             </div>
           </div>
         )}

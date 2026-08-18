@@ -4,6 +4,7 @@ import type { IconShape, ShapeCategory } from "../shapes/types";
 import ShapePreview from "./ShapePreview";
 import { createVariant } from "../shapes/registry";
 import type { IconVariant } from "../shapes/types";
+import Chip from "@mui/material/Chip";
 
 interface Props {
   imageSrc: string | null;
@@ -58,18 +59,30 @@ export default function ShapeSelector({ imageSrc, selectedShapes, onToggle, onSe
           onChange={(e) => setQuery(e.target.value)}
           aria-label="Search icon shapes by name"
         />
-        <div className="shape-categories" role="group" aria-label="Shape categories">
-          {CATEGORIES.map((c) => (
-            <button
-              key={c.key}
-              type="button"
-              className={`chip ${category === c.key ? "chip-active" : ""}`}
-              onClick={() => setCategory(c.key)}
-              aria-pressed={category === c.key}
-            >
-              {c.label}
-            </button>
-          ))}
+        <div className="shape-categories" role="group" aria-label="Shape categories" style={{ gap: 6, display: "flex", flexWrap: "wrap" }}>
+          {CATEGORIES.map((c) => {
+            const isActive = category === c.key;
+            return (
+              <Chip
+                key={c.key}
+                label={c.label}
+                size="small"
+                clickable
+                onClick={() => setCategory(c.key)}
+                sx={{
+                  fontSize: 12,
+                  fontWeight: 600,
+                  backgroundColor: isActive ? "var(--accent)" : "var(--panel-2)",
+                  color: isActive ? "#ffffff" : "var(--muted)",
+                  borderColor: isActive ? "var(--accent)" : "var(--border)",
+                  "&:hover": {
+                    backgroundColor: isActive ? "var(--accent-hover)" : "var(--accent-light)",
+                    color: isActive ? "#ffffff" : "var(--accent)",
+                  },
+                }}
+              />
+            );
+          })}
         </div>
       </div>
 
