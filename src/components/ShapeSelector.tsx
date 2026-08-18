@@ -36,53 +36,67 @@ export default function ShapeSelector({ imageSrc, selectedShapes, onToggle, onSe
   const previewVariant = (shape: IconShape): IconVariant => createVariant(shape as keyof typeof SHAPE_REGISTRY);
 
   return (
-    <div className="shape-selector">
+    <section className="shape-selector" aria-labelledby="shape-selector-heading">
       <div className="shape-selector-header">
-        <h2>Icon Shape</h2>
-        <button className="btn-secondary" onClick={onSelectAll}>
+        <h2 id="shape-selector-heading" className="section-title">
+          Icon Shapes
+        </h2>
+        <button className="btn-secondary" onClick={onSelectAll} type="button" aria-label="Select all icon shapes">
           Select All
         </button>
       </div>
 
-      {shapes.length > 8 && (
-        <div className="shape-search-row">
-          <input
-            className="shape-search"
-            placeholder="Search shapes..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          <div className="shape-categories">
-            {CATEGORIES.map((c) => (
-              <button
-                key={c.key}
-                className={`chip ${category === c.key ? "chip-active" : ""}`}
-                onClick={() => setCategory(c.key)}
-              >
-                {c.label}
-              </button>
-            ))}
-          </div>
+      <div className="shape-search-row">
+        <label htmlFor="shape-search-input" className="sr-only">
+          Search shapes
+        </label>
+        <input
+          id="shape-search-input"
+          className="shape-search"
+          placeholder="Search shapes..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          aria-label="Search icon shapes by name"
+        />
+        <div className="shape-categories" role="group" aria-label="Shape categories">
+          {CATEGORIES.map((c) => (
+            <button
+              key={c.key}
+              type="button"
+              className={`chip ${category === c.key ? "chip-active" : ""}`}
+              onClick={() => setCategory(c.key)}
+              aria-pressed={category === c.key}
+            >
+              {c.label}
+            </button>
+          ))}
         </div>
-      )}
+      </div>
 
-      <div className="shape-grid">
+      <div className="shape-grid" role="group" aria-label="Available icon shapes">
         {filtered.map((def) => {
           const selected = selectedShapes.has(def.id);
           return (
             <button
               key={def.id}
+              type="button"
               className={`shape-card ${selected ? "shape-card-selected" : ""}`}
               onClick={() => onToggle(def.id)}
               aria-pressed={selected}
+              aria-label={`${def.label} shape ${selected ? "selected" : "not selected"}`}
+              title={`Toggle ${def.label} shape`}
             >
-              <div className="shape-card-check">{selected ? "✓" : "○"}</div>
-              <ShapePreview variant={previewVariant(def.id)} imageSrc={imageSrc} size={72} />
-              <div className="shape-card-label">{def.label}</div>
+              {selected && (
+                <div className="shape-card-check" aria-hidden="true">
+                  ✓
+                </div>
+              )}
+              <ShapePreview variant={previewVariant(def.id)} imageSrc={imageSrc} size={64} />
+              <span className="shape-card-label">{def.label}</span>
             </button>
           );
         })}
       </div>
-    </div>
+    </section>
   );
 }

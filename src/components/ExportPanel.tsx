@@ -37,109 +37,130 @@ export default function ExportPanel({
   };
 
   return (
-    <div className="export-panel">
-      <div className="export-panel-bar">
-        <button className="export-panel-toggle" onClick={() => setExpanded((e) => !e)}>
-          <span>Export Settings</span>
-          <span className={`chevron ${expanded ? "chevron-open" : ""}`}>⌄</span>
-        </button>
-
-        <div className="export-panel-bar-right">
-          {summary && (
-            <span className="export-summary-line">
-              {summary.totalFiles} files · {summary.sizeLabel}
+    <div className="export-panel-container">
+      <div className="export-panel" aria-label="Export icon assets panel">
+        <div className="export-panel-bar">
+          <button
+            type="button"
+            className="export-panel-toggle"
+            onClick={() => setExpanded((e) => !e)}
+            aria-expanded={expanded}
+            aria-controls="export-drawer-content"
+          >
+            <span>⚙️ Target Platforms & Export Settings</span>
+            <span className={`chevron ${expanded ? "chevron-open" : ""}`} aria-hidden="true">
+              ▼
             </span>
-          )}
-          <button className="btn-primary" onClick={onGenerate} disabled={generating || enabledVariants.length === 0}>
-            {generating ? "Generating…" : "Download ZIP"}
           </button>
+
+          <div className="export-panel-bar-right">
+            {summary ? (
+              <span className="export-summary-line">
+                {summary.totalFiles} assets generated · {summary.sizeLabel}
+              </span>
+            ) : (
+              <span className="export-summary-line">
+                {enabledVariants.length} shape variant{enabledVariants.length !== 1 ? "s" : ""} selected
+              </span>
+            )}
+            <button
+              type="button"
+              className="btn-primary btn-large"
+              onClick={onGenerate}
+              disabled={generating || enabledVariants.length === 0 || !imageSrc}
+              aria-label={generating ? "Generating icons..." : "Download icon zip asset bundle"}
+              style={{ width: "auto", minWidth: "150px" }}
+            >
+              {generating ? "Generating ZIP…" : "📦 Download ZIP"}
+            </button>
+          </div>
         </div>
-      </div>
 
-      {expanded && (
-        <div className="export-panel-body">
-          <div className="export-columns">
-            <div className="export-column">
-              <h3>Android</h3>
-              {(
-                [
-                  ["legacy", "Legacy launcher"],
-                  ["adaptive", "Adaptive"],
-                  ["themed", "Themed (monochrome)"],
-                  ["notification", "Notification"],
-                  ["playStore", "Google Play"],
-                ] as const
-              ).map(([key, label]) => (
-                <label key={key} className="export-toggle">
-                  <input
-                    type="checkbox"
-                    checked={project.android[key]}
-                    onChange={(e) => onChangeAndroid({ [key]: e.target.checked })}
-                  />
-                  {label}
-                </label>
-              ))}
-              <AndroidExtraPreviews
-                imageSrc={imageSrc}
-                regular={regularVariant}
-                showMonochrome={project.android.themed}
-                showNotification={project.android.notification}
-              />
-            </div>
-
-            <div className="export-column">
-              <h3>iOS</h3>
-              {(
-                [
-                  ["enabled", "Default"],
-                  ["dark", "Dark"],
-                  ["tinted", "Tinted"],
-                ] as const
-              ).map(([key, label]) => (
-                <label key={key} className="export-toggle">
-                  <input
-                    type="checkbox"
-                    checked={project.ios[key]}
-                    onChange={(e) => onChangeIos({ [key]: e.target.checked })}
-                  />
-                  {label}
-                </label>
-              ))}
-            </div>
-
-            <div className="export-column">
-              <h3>Web</h3>
-              <label className="export-toggle">
-                <input
-                  type="checkbox"
-                  checked={project.web.enabled}
-                  onChange={(e) => onChangeWeb({ enabled: e.target.checked })}
+        {expanded && (
+          <div id="export-drawer-content" className="export-panel-body">
+            <div className="export-columns">
+              <div className="export-column">
+                <h3>Android Options</h3>
+                {(
+                  [
+                    ["legacy", "Legacy Launcher Icons"],
+                    ["adaptive", "Adaptive Icons"],
+                    ["themed", "Themed (Monochrome)"],
+                    ["notification", "Notification Icons"],
+                    ["playStore", "Google Play Store 512px"],
+                  ] as const
+                ).map(([key, label]) => (
+                  <label key={key} className="export-toggle">
+                    <input
+                      type="checkbox"
+                      checked={project.android[key]}
+                      onChange={(e) => onChangeAndroid({ [key]: e.target.checked })}
+                    />
+                    <span>{label}</span>
+                  </label>
+                ))}
+                <AndroidExtraPreviews
+                  imageSrc={imageSrc}
+                  regular={regularVariant}
+                  showMonochrome={project.android.themed}
+                  showNotification={project.android.notification}
                 />
-                PWA + favicon
-              </label>
+              </div>
+
+              <div className="export-column">
+                <h3>iOS Options</h3>
+                {(
+                  [
+                    ["enabled", "Standard AppIcon.appiconset"],
+                    ["dark", "Dark Mode Variant"],
+                    ["tinted", "Tinted iOS Variant"],
+                  ] as const
+                ).map(([key, label]) => (
+                  <label key={key} className="export-toggle">
+                    <input
+                      type="checkbox"
+                      checked={project.ios[key]}
+                      onChange={(e) => onChangeIos({ [key]: e.target.checked })}
+                    />
+                    <span>{label}</span>
+                  </label>
+                ))}
+              </div>
+
+              <div className="export-column">
+                <h3>Web & PWA</h3>
+                <label className="export-toggle">
+                  <input
+                    type="checkbox"
+                    checked={project.web.enabled}
+                    onChange={(e) => onChangeWeb({ enabled: e.target.checked })}
+                  />
+                  <span>Favicon & PWA Icons</span>
+                </label>
+              </div>
+
+              <div className="export-column">
+                <h3>Active Shapes</h3>
+                {enabledVariants.map((v) => (
+                  <div key={v.id} className="export-toggle" style={{ color: "var(--accent)", fontWeight: 600 }}>
+                    ✓ {v.name}
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div className="export-column">
-              <h3>Variants</h3>
-              {enabledVariants.map((v) => (
-                <div key={v.id} className="export-toggle">
-                  ✓ {v.name}
-                </div>
-              ))}
+            <div className="manifest-preview">
+              <div className="manifest-preview-header">
+                <span>AndroidManifest.xml Snippet</span>
+                <button type="button" className="btn-secondary" onClick={copyManifest}>
+                  {copied ? "✓ Copied to Clipboard!" : "Copy Snippet"}
+                </button>
+              </div>
+              <pre>{manifestSnippet()}</pre>
             </div>
           </div>
-
-          <div className="manifest-preview">
-            <div className="manifest-preview-header">
-              <span>AndroidManifest.xml</span>
-              <button className="btn-secondary" onClick={copyManifest}>
-                {copied ? "Copied!" : "Copy this configuration"}
-              </button>
-            </div>
-            <pre>{manifestSnippet()}</pre>
-          </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

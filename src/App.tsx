@@ -7,8 +7,6 @@ import { loadImage } from "./shapes/render";
 import { deletePreset, loadPresets, savePreset, type PresetConfig, type SavedPreset } from "./shapes/presets";
 import ShapeSelector from "./components/ShapeSelector";
 import VariantEditor from "./components/VariantEditor";
-import GeneratedGrid from "./components/GeneratedGrid";
-import ExportPanel from "./components/ExportPanel";
 import Header from "./components/Header";
 import PlatformPreview from "./components/PlatformPreview";
 import PresetBar from "./components/PresetBar";
@@ -44,7 +42,6 @@ export default function App() {
   const [advanced, setAdvanced] = useState(false);
   const [activeVariantId, setActiveVariantId] = useState(project.variants[0].id);
   const [generating, setGenerating] = useState(false);
-  const [summary, setSummary] = useState<{ totalFiles: number; sizeLabel: string } | null>(null);
   const [rnPresetApplied, setRnPresetApplied] = useState(true);
   const [theme, setTheme] = useState<Theme>(getInitialTheme);
   const [presets, setPresets] = useState<SavedPreset[]>(() => loadPresets());
@@ -58,7 +55,7 @@ export default function App() {
 
   useEffect(() => {
     if (!notice) return;
-    const t = setTimeout(() => setNotice(null), 2500);
+    const t = setTimeout(() => setNotice(null), 3000);
     return () => clearTimeout(t);
   }, [notice]);
 
@@ -71,6 +68,7 @@ export default function App() {
     const reader = new FileReader();
     reader.onload = () => {
       setProject((p) => ({ ...p, sourceImage: reader.result as string }));
+      setNotice("Logo uploaded successfully!");
     };
     reader.readAsDataURL(file);
   };
@@ -130,6 +128,7 @@ export default function App() {
       border: regular.border ? { ...regular.border } : undefined,
       shadow: regular.shadow ? { ...regular.shadow } : undefined,
     });
+    setNotice("Settings copied from Regular variant.");
   };
 
   const applyReactNativePreset = () => {
@@ -139,6 +138,7 @@ export default function App() {
       android: { ...p.android, legacy: true, adaptive: true },
     }));
     setRnPresetApplied(true);
+    setNotice("React Native preset applied.");
   };
 
   const handleGenerate = async () => {
@@ -148,7 +148,7 @@ export default function App() {
       const img = await loadImage(project.sourceImage);
       const { blob, summary: s } = await buildProjectZip(project, img);
       downloadZip(blob, "app-icons.zip");
-      setSummary({ totalFiles: s.totalFiles, sizeLabel: formatSize(blob.size) });
+      setNotice(`Downloaded ${s.totalFiles} app icons (${formatSize(blob.size)})!`);
     } finally {
       setGenerating(false);
     }
@@ -166,24 +166,48 @@ export default function App() {
     if (!preset) return;
     setProject((p) => ({ ...preset.config, sourceImage: p.sourceImage }));
     setActiveVariantId(preset.config.variants[0]?.id ?? "");
-    setNotice(`Preset "${preset.name}" loaded — upload a logo to render it.`);
+    setNotice(`Preset "${preset.name}" loaded.`);
   };
 
   const handleDeletePreset = (id: string) => {
     setPresets(deletePreset(id));
+    setNotice("Preset deleted.");
   };
 
   return (
     <div className="app">
-      <Header theme={theme} onToggleTheme={() => setTheme((t) => (t === "dark" ? "light" : "dark"))} />
+      <Header
+        theme={theme}
+        onToggleTheme={() => setTheme((t) => (t === "dark" ? "light" : "dark"))}
+        onDownload={handleGenerate}
+        generating={generating}
+        hasSource={!!project.sourceImage}
+        project={project}
+        onChangeAndroid={(patch) => setProject((p) => ({ ...p, android: { ...p.android, ...patch } }))}
+        onChangeIos={(patch) => setProject((p) => ({ ...p, ios: { ...p.ios, ...patch } }))}
+        onChangeWeb={(patch) => setProject((p) => ({ ...p, web: { ...p.web, ...patch } }))}
+      />
 
       <div className="app-body">
         <div className="workspace">
-          <aside className="sidebar">
-            <section className="upload-section">
+          <aside className="sidebar" aria-label="Icon generation controls sidebar">
+            <section className="upload-section" aria-labelledby="upload-heading">
+              <h2 id="upload-heading" className="section-title">
+                Source Logo
+              </h2>
+
               <div
                 className="upload-zone"
+                tabIndex={0}
+                role="button"
+                aria-label="Upload logo image file drop zone"
                 onClick={() => fileInputRef.current?.click()}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    fileInputRef.current?.click();
+                  }
+                }}
                 onDragOver={(e) => e.preventDefault()}
                 onDrop={(e) => {
                   e.preventDefault();
@@ -192,9 +216,16 @@ export default function App() {
                 }}
               >
                 {project.sourceImage ? (
-                  <img src={project.sourceImage} alt="source" className="upload-preview" />
+                  <div className="upload-preview-wrapper">
+                    <img src={project.sourceImage} alt="Source logo preview" className="upload-preview" />
+                    <span className="hint">Click or drop to replace logo</span>
+                  </div>
                 ) : (
-                  <span>Drop your logo here, or click to upload</span>
+                  <>
+                    <span className="upload-icon" aria-hidden="true">📁</span>
+                    <span className="upload-prompt">Drag & drop your logo here,<br />or click to browse files</span>
+                    <span className="hint">PNG, JPEG, SVG supported</span>
+                  </>
                 )}
               </div>
               <input
@@ -205,12 +236,12 @@ export default function App() {
                 onChange={(e) => e.target.files?.[0] && onUpload(e.target.files[0])}
               />
 
-              <button className="btn-secondary" onClick={applyReactNativePreset}>
-                Use React Native Preset
+              <button type="button" className="btn-secondary" onClick={applyReactNativePreset} style={{ width: "100%" }}>
+                ⚡ Apply React Native Preset
               </button>
               {rnPresetApplied && (
                 <p className="hint">
-                  Android React Native projects commonly reference both regular and round launcher resources.
+                  Applies standard React Native launcher resources (ic_launcher and ic_launcher_round).
                 </p>
               )}
             </section>
@@ -218,17 +249,38 @@ export default function App() {
             <PresetBar presets={presets} onSave={handleSavePreset} onLoad={handleLoadPreset} onDelete={handleDeletePreset} />
 
             {!advanced ? (
-              <section className="simple-section">
-                <h2>Icon Shape</h2>
+              <section className="simple-section" aria-labelledby="simple-shape-heading">
+                <h2 id="simple-shape-heading" className="section-title">
+                  Active Icon Shapes
+                </h2>
                 <div className="simple-list">
                   {project.variants.map((v) => (
                     <div key={v.id} className="simple-item">
-                      ✓ {v.name}
+                      <span className="simple-item-check" aria-hidden="true">✓</span>
+                      <span className="simple-item-name">{v.name}</span>
+                      <div className="simple-item-actions">
+                        <label className="toggle-switch-label" title={v.enabled && enabledCount === 1 ? "At least one variant required" : undefined}>
+                          <input
+                            type="checkbox"
+                            className="sr-only"
+                            checked={v.enabled}
+                            disabled={v.enabled && enabledCount === 1}
+                            onChange={() => toggleEnabled(v.id)}
+                            aria-label={`Toggle ${v.name}`}
+                          />
+                          <span className={`toggle-switch toggle-switch-sm ${v.enabled ? "toggle-switch-active" : ""}`}>
+                            <span className="toggle-switch-thumb" />
+                          </span>
+                        </label>
+                        <button type="button" className="btn-link" onClick={() => setActiveVariantId(v.id)} aria-label={`Edit ${v.name}`}>
+                          Edit
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>
-                <button className="btn-link" onClick={() => setAdvanced(true)}>
-                  + Add Variant
+                <button type="button" className="btn-link" onClick={() => setAdvanced(true)}>
+                  + Customize & Add Shapes
                 </button>
               </section>
             ) : (
@@ -252,33 +304,20 @@ export default function App() {
             )}
           </aside>
 
-          <main className="canvas-area">
-            {notice && <div className="notice-banner">{notice}</div>}
+          <main className="canvas-area" aria-label="Studio preview">
+            {notice && <div className="notice-banner" role="status" aria-live="polite">{notice}</div>}
 
             <PlatformPreview imageSrc={project.sourceImage} regular={regularVariant} round={roundVariant} appName="RniconHub" />
 
-            <GeneratedGrid
-              variants={project.variants}
-              imageSrc={project.sourceImage}
-              onToggleEnabled={toggleEnabled}
-              onEdit={(id) => setActiveVariantId(id)}
-            />
-
-            {!project.sourceImage && <div className="upload-nudge">Upload a source image to enable generation.</div>}
+            {!project.sourceImage && (
+              <div className="upload-nudge">
+                💡 Upload a source logo to generate live previews and downloadable app icon assets.
+              </div>
+            )}
           </main>
         </div>
 
-        <ExportPanel
-          project={project}
-          imageSrc={project.sourceImage}
-          regularVariant={regularVariant}
-          onChangeAndroid={(patch) => setProject((p) => ({ ...p, android: { ...p.android, ...patch } }))}
-          onChangeIos={(patch) => setProject((p) => ({ ...p, ios: { ...p.ios, ...patch } }))}
-          onChangeWeb={(patch) => setProject((p) => ({ ...p, web: { ...p.web, ...patch } }))}
-          onGenerate={handleGenerate}
-          generating={generating}
-          summary={summary}
-        />
+
       </div>
     </div>
   );
