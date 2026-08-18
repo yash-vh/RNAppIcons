@@ -87,17 +87,20 @@ body {
 
 /* Header Component */
 .site-header {
+  position: sticky;
+  top: 12px;
+  z-index: 100;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 20px;
+  padding: 12px 20px;
   background: var(--panel-glass);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
-  margin-top: 4px;
+  margin-top: 0;
 }
 
 .site-header-brand {
@@ -624,19 +627,20 @@ section:hover,
   margin-left: auto;
 }
 
-/* Small toggle switch for variant list */
+/* Small Material UI toggle switch for variant list */
 .toggle-switch-sm {
-  width: 30px;
-  height: 18px;
+  width: 32px;
+  height: 16px;
+  border-radius: 8px;
 }
 .toggle-switch-sm .toggle-switch-thumb {
-  width: 12px;
-  height: 12px;
-  top: 2px;
-  left: 2px;
+  width: 16px;
+  height: 16px;
+  top: 0;
+  left: 0;
 }
 .toggle-switch-sm.toggle-switch-active .toggle-switch-thumb {
-  transform: translateX(12px);
+  transform: translateX(16px);
 }
 
 /* Shape Selector Grid */
@@ -845,44 +849,48 @@ section:hover,
   cursor: pointer;
 }
 
-/* Custom Accessible Toggle Switch */
+/* Material UI (MUI) Accessible Toggle Switch */
 .toggle-switch-label {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
   user-select: none;
 }
 .toggle-switch {
   width: 38px;
-  height: 22px;
-  border-radius: 999px;
-  background: var(--panel-2);
-  border: 1px solid var(--border);
+  height: 20px;
+  border-radius: 10px;
+  background: rgba(120, 120, 128, 0.32);
   position: relative;
-  transition:
-    background var(--transition-fast),
-    border-color var(--transition-fast);
+  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+:root[data-theme="dark"] .toggle-switch {
+  background: rgba(255, 255, 255, 0.22);
 }
 .toggle-switch-active {
-  background: var(--accent);
-  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 55%, transparent) !important;
 }
 .toggle-switch-thumb {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background: #ffffff;
   position: absolute;
-  top: 2px;
-  left: 2px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  transition: transform var(--transition-fast);
+  top: 0;
+  left: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.28), 0 1px 1px rgba(0, 0, 0, 0.16);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease, box-shadow 0.2s ease;
 }
 .toggle-switch-active .toggle-switch-thumb {
-  transform: translateX(16px);
+  transform: translateX(18px);
+  background: var(--accent);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3), 0 0 0 5px color-mix(in srgb, var(--accent) 20%, transparent);
 }
 
 /* Generated Icons Grid */
@@ -1015,136 +1023,85 @@ section:hover,
   padding: 10px 0;
 }
 
-/* Realistic Device Frames */
-.device-shell {
+/* Realistic Asset-based Device Frames */
+.asset-device-container {
   position: relative;
-  display: inline-flex;
+  width: 280px;
+  max-width: 100%;
+  margin: 0 auto;
+  filter: drop-shadow(0 16px 28px rgba(0, 0, 0, 0.28));
+  user-select: none;
 }
 
-.device-btn {
+.asset-device-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+}
+
+/* Android Icon Slot: Directly above 'App Name' text label */
+.android-app-icon-slot {
   position: absolute;
-  background: linear-gradient(90deg, #374151, #1f2937);
-  border-radius: 3px;
-}
-.device-btn-power {
-  right: -4px;
-  top: 90px;
-  width: 4px;
-  height: 48px;
-}
-.device-btn-volume {
-  left: -4px;
-  top: 80px;
-  width: 4px;
-  height: 70px;
-}
-
-.phone-mock {
-  width: 230px;
-  height: 470px;
-  border-radius: 40px;
-  border: 10px solid #111827;
-  position: relative;
-  overflow: hidden;
-  box-shadow:
-    var(--shadow-lg),
-    inset 0 0 0 2px rgba(255, 255, 255, 0.1);
-  padding: 16px 14px;
-  display: flex;
-  flex-direction: column;
-  transition: background var(--transition-normal);
-}
-
-.wallpaper-dark {
-  background: linear-gradient(165deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
-}
-.wallpaper-neon {
-  background: linear-gradient(
-    165deg,
-    #0f172a 0%,
-    #0369a1 40%,
-    #4338ca 70%,
-    #6b21a8 100%
-  );
-}
-.wallpaper-sunset {
-  background: linear-gradient(165deg, #ea580c 0%, #db2777 50%, #4c1d95 100%);
-}
-.wallpaper-light {
-  background: linear-gradient(165deg, #e0f2fe 0%, #bae6fd 40%, #ddd6fe 100%);
-}
-
-.phone-mock-statusbar {
-  display: flex;
-  justify-content: space-between;
-  color: #ffffff;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 0 4px;
-  margin-bottom: 16px;
-  margin-top: 4px;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-}
-
-.phone-mock-grid {
-  flex: 1;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px 8px;
-  align-content: start;
-}
-
-.phone-mock-app {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-}
-.phone-mock-app span {
-  color: #ffffff;
-  font-size: 9px;
-  font-weight: 600;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
-  text-align: center;
-}
-
-.phone-mock-icon-shell {
-  width: 40px;
-  height: 40px;
+  top: 27.2%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 13.5%;
+  aspect-ratio: 1 / 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #ffffff;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-  overflow: hidden;
-  font-size: 18px;
-}
-.round-shell {
-  border-radius: 50%;
-}
-.squircle-shell {
-  border-radius: 12px;
-}
-.hero-shell {
-  width: 48px;
-  height: 48px;
-}
-.dock-shell {
-  width: 38px;
-  height: 38px;
+  z-index: 2;
 }
 
-.phone-mock-dock {
-  margin-top: 12px;
-  height: 64px;
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+.android-app-icon-slot svg {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 50%;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+/* iOS Icon Slot: Directly above 'App Name' in column 1 */
+.ios-app-icon-slot {
+  position: absolute;
+  top: 14.3%;
+  left: 17%;
+  width: 14.4%;
+  aspect-ratio: 1 / 1;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+  justify-content: center;
+  z-index: 2;
+}
+
+.ios-app-icon-slot svg {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 22.37%;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.28);
+}
+
+.placeholder-device-icon {
+  width: 100%;
+  height: 100%;
+  background: var(--panel);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+}
+.round-placeholder {
+  border-radius: 50%;
+}
+.squircle-placeholder {
+  border-radius: 22.37%;
+}
+
+.browser-hero-icon {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
 }
 
 /* Web Browser Mockup */

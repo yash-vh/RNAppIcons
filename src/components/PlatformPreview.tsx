@@ -1,6 +1,8 @@
 import { useState } from "react";
 import type { IconVariant } from "../shapes/types";
 import ShapePreview from "./ShapePreview";
+import androidFrame from "../assets/android.png";
+import iosFrame from "../assets/ios.png";
 
 interface Props {
   imageSrc: string | null;
@@ -10,9 +12,6 @@ interface Props {
 }
 
 type Platform = "android" | "ios" | "web";
-type Wallpaper = "dark" | "neon" | "sunset" | "light";
-
-const DOCK_APPS = ["Phone", "Messages", "Camera"];
 
 /** Android Robot SVG Icon */
 const AndroidIcon = () => (
@@ -38,7 +37,8 @@ const GlobeIcon = () => (
     stroke="currentColor"
     strokeWidth="2"
     strokeLinecap="round"
-    strokeLinejoin="round">
+    strokeLinejoin="round"
+  >
     <circle cx="12" cy="12" r="10" />
     <line x1="2" y1="12" x2="22" y2="12" />
     <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
@@ -52,7 +52,6 @@ export default function PlatformPreview({
   appName = "RniconHub",
 }: Props) {
   const [platform, setPlatform] = useState<Platform>("android");
-  const [wallpaper, setWallpaper] = useState<Wallpaper>("dark");
 
   const androidVariant = round ?? regular;
   const iosVariant = regular ?? round;
@@ -68,13 +67,15 @@ export default function PlatformPreview({
         <div
           className="platform-tabs"
           role="tablist"
-          aria-label="Device platform selection">
+          aria-label="Device platform selection"
+        >
           <button
             type="button"
             role="tab"
             aria-selected={platform === "android"}
             className={`platform-tab ${platform === "android" ? "platform-tab-active" : ""}`}
-            onClick={() => setPlatform("android")}>
+            onClick={() => setPlatform("android")}
+          >
             <AndroidIcon /> Android
           </button>
           <button
@@ -82,7 +83,8 @@ export default function PlatformPreview({
             role="tab"
             aria-selected={platform === "ios"}
             className={`platform-tab ${platform === "ios" ? "platform-tab-active" : ""}`}
-            onClick={() => setPlatform("ios")}>
+            onClick={() => setPlatform("ios")}
+          >
             <AppleIcon /> iOS
           </button>
           <button
@@ -90,7 +92,8 @@ export default function PlatformPreview({
             role="tab"
             aria-selected={platform === "web"}
             className={`platform-tab ${platform === "web" ? "platform-tab-active" : ""}`}
-            onClick={() => setPlatform("web")}>
+            onClick={() => setPlatform("web")}
+          >
             <GlobeIcon /> Web
           </button>
         </div>
@@ -98,144 +101,47 @@ export default function PlatformPreview({
 
       <div className="platform-stage">
         {platform === "android" && (
-          <div className="device-shell">
-            <div className="device-btn device-btn-power" />
-            <div className="device-btn device-btn-volume" />
-            <div className={`phone-mock wallpaper-${wallpaper}`}>
-              <div className="phone-mock-statusbar">
-                <span>10:08</span>
-                <span aria-hidden="true">📶 100%</span>
-              </div>
-              <div className="phone-mock-grid">
-                <div className="phone-mock-app">
-                  <div className="phone-mock-icon-shell round-shell">
-                    <span className="glyph" aria-hidden="true">
-                      📞
-                    </span>
-                  </div>
-                  <span>Phone</span>
+          <div className="asset-device-container android-device-container">
+            <img
+              src={androidFrame}
+              alt="Android phone frame preview"
+              className="asset-device-img"
+            />
+            <div className="android-app-icon-slot">
+              {androidVariant && imageSrc ? (
+                <ShapePreview
+                  variant={androidVariant}
+                  imageSrc={imageSrc}
+                  size={52}
+                />
+              ) : (
+                <div className="placeholder-device-icon round-placeholder">
+                  🚀
                 </div>
-                <div className="phone-mock-app">
-                  <div className="phone-mock-icon-shell round-shell">
-                    <span className="glyph" aria-hidden="true">
-                      ✉️
-                    </span>
-                  </div>
-                  <span>Gmail</span>
-                </div>
-                <div className="phone-mock-app">
-                  <div className="phone-mock-icon-shell round-shell hero-shell">
-                    {androidVariant && imageSrc ? (
-                      <ShapePreview
-                        variant={androidVariant}
-                        imageSrc={imageSrc}
-                        size={48}
-                      />
-                    ) : (
-                      <span className="glyph">🚀</span>
-                    )}
-                  </div>
-                  <span>{appName}</span>
-                </div>
-                <div className="phone-mock-app">
-                  <div className="phone-mock-icon-shell round-shell">
-                    <span className="glyph" aria-hidden="true">
-                      🧮
-                    </span>
-                  </div>
-                  <span>Calculator</span>
-                </div>
-                <div className="phone-mock-app">
-                  <div className="phone-mock-icon-shell round-shell">
-                    <span className="glyph" aria-hidden="true">
-                      ▶️
-                    </span>
-                  </div>
-                  <span>YouTube</span>
-                </div>
-              </div>
-              <div className="phone-mock-dock">
-                <div className="phone-mock-icon-shell round-shell dock-shell">
-                  <span className="glyph" aria-hidden="true">
-                    💬
-                  </span>
-                </div>
-                <div className="phone-mock-icon-shell round-shell dock-shell">
-                  <span className="glyph" aria-hidden="true">
-                    🌐
-                  </span>
-                </div>
-                <div className="phone-mock-icon-shell round-shell dock-shell">
-                  <span className="glyph" aria-hidden="true">
-                    📷
-                  </span>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         )}
 
         {platform === "ios" && (
-          <div className="device-shell">
-            <div className="device-btn device-btn-power" />
-            <div className="device-btn device-btn-volume" />
-            <div className={`phone-mock wallpaper-${wallpaper}`}>
-              <div className="phone-mock-statusbar">
-                <span>9:41</span>
-                <span aria-hidden="true">📶 🔋</span>
-              </div>
-              <div className="phone-mock-grid">
-                <div className="phone-mock-app">
-                  <div className="phone-mock-icon-shell squircle-shell hero-shell">
-                    {iosVariant && imageSrc ? (
-                      <ShapePreview
-                        variant={iosVariant}
-                        imageSrc={imageSrc}
-                        size={48}
-                      />
-                    ) : (
-                      <span className="glyph">🚀</span>
-                    )}
-                  </div>
-                  <span>{appName}</span>
+          <div className="asset-device-container ios-device-container">
+            <img
+              src={iosFrame}
+              alt="iPhone device frame preview"
+              className="asset-device-img"
+            />
+            <div className="ios-app-icon-slot">
+              {iosVariant && imageSrc ? (
+                <ShapePreview
+                  variant={iosVariant}
+                  imageSrc={imageSrc}
+                  size={56}
+                />
+              ) : (
+                <div className="placeholder-device-icon squircle-placeholder">
+                  🚀
                 </div>
-                <div className="phone-mock-app">
-                  <div className="phone-mock-icon-shell squircle-shell">
-                    <span className="glyph" aria-hidden="true">
-                      ✉️
-                    </span>
-                  </div>
-                  <span>Mail</span>
-                </div>
-                <div className="phone-mock-app">
-                  <div className="phone-mock-icon-shell squircle-shell">
-                    <span className="glyph" aria-hidden="true">
-                      📷
-                    </span>
-                  </div>
-                  <span>Camera</span>
-                </div>
-              </div>
-              <div className="phone-mock-dock">
-                {DOCK_APPS.map((name) => (
-                  <div
-                    className="phone-mock-icon-shell squircle-shell dock-shell"
-                    key={name}>
-                    <span className="glyph" aria-hidden="true">
-                      •
-                    </span>
-                  </div>
-                ))}
-                {iosVariant && imageSrc && (
-                  <div className="phone-mock-icon-shell squircle-shell dock-shell">
-                    <ShapePreview
-                      variant={iosVariant}
-                      imageSrc={imageSrc}
-                      size={38}
-                    />
-                  </div>
-                )}
-              </div>
+              )}
             </div>
           </div>
         )}
@@ -251,7 +157,7 @@ export default function PlatformPreview({
                   <ShapePreview
                     variant={webVariant}
                     imageSrc={imageSrc}
-                    size={14}
+                    size={16}
                   />
                 )}
                 <span>{appName}</span>
@@ -263,11 +169,11 @@ export default function PlatformPreview({
             <div className="browser-mock-body">
               <div className="browser-mock-favicon-row">
                 {webVariant && imageSrc && (
-                  <div className="phone-mock-icon-shell squircle-shell hero-shell">
+                  <div className="browser-hero-icon">
                     <ShapePreview
                       variant={webVariant}
                       imageSrc={imageSrc}
-                      size={48}
+                      size={64}
                     />
                   </div>
                 )}
@@ -275,10 +181,11 @@ export default function PlatformPreview({
                   <strong>{appName} App</strong>
                   <p
                     style={{
-                      margin: 0,
+                      margin: "4px 0 0",
                       fontSize: "12px",
                       color: "var(--muted)",
-                    }}>
+                    }}
+                  >
                     Favicon · Apple Touch Icon · Web Manifest Maskable Icon
                   </p>
                 </div>
