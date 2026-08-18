@@ -16,9 +16,16 @@ interface Props {
 const CREATOR_NAME = "yashnandha";
 const CREATOR_INSTAGRAM_URL = "https://instagram.com/yashnandha06";
 
-/** Sun SVG icon */
 const SunIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round">
     <circle cx="12" cy="12" r="5" />
     <line x1="12" y1="1" x2="12" y2="3" />
     <line x1="12" y1="21" x2="12" y2="23" />
@@ -31,16 +38,30 @@ const SunIcon = () => (
   </svg>
 );
 
-/** Moon SVG icon */
 const MoonIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round">
     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
   </svg>
 );
 
-/** Download SVG icon */
 const DownloadIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round">
     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
     <polyline points="7 10 12 15 17 10" />
     <line x1="12" y1="15" x2="12" y2="3" />
@@ -49,7 +70,15 @@ const DownloadIcon = () => (
 
 /** Settings gear SVG icon */
 const SettingsIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round">
     <circle cx="12" cy="12" r="3" />
     <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
   </svg>
@@ -71,7 +100,15 @@ const AppleSmIcon = () => (
 
 /** Globe SVG icon */
 const GlobeSmIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round">
     <circle cx="12" cy="12" r="10" />
     <line x1="2" y1="12" x2="22" y2="12" />
     <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
@@ -92,17 +129,24 @@ export default function Header({
   const [showTargets, setShowTargets] = useState(false);
 
   const activeTargets: string[] = [];
-  if (project.android.legacy || project.android.adaptive) activeTargets.push("Android");
+  if (project.android.legacy || project.android.adaptive)
+    activeTargets.push("Android");
   if (project.ios.enabled) activeTargets.push("iOS");
   if (project.web.enabled) activeTargets.push("Web");
 
   return (
     <header className="site-header" role="banner">
       <div className="site-header-brand">
-        <span className="brand-mark" aria-hidden="true">R</span>
+        <span className="brand-mark" aria-hidden="true">
+          IC
+        </span>
         <div className="brand-text">
-          <h1 className="brand-name" style={{ margin: 0 }}>RniconHub</h1>
-          <span className="brand-tagline">Multi-shape React Native app icon studio</span>
+          <h1 className="brand-name" style={{ margin: 0 }}>
+            IconStudio
+          </h1>
+          <span className="brand-tagline">
+            Multi-shape React Native app icon studio
+          </span>
         </div>
       </div>
 
@@ -113,10 +157,13 @@ export default function Header({
           target="_blank"
           rel="noreferrer noopener"
           title={`Follow ${CREATOR_NAME} on Instagram`}
-          aria-label={`Made by ${CREATOR_NAME} on Instagram`}
-        >
-          <span className="creator-avatar" aria-hidden="true">{CREATOR_NAME.charAt(0)}</span>
-          <span>Made by <strong>{CREATOR_NAME}</strong></span>
+          aria-label={`Made by ${CREATOR_NAME} on Instagram`}>
+          <span className="creator-avatar" aria-hidden="true">
+            {CREATOR_NAME.charAt(0)}
+          </span>
+          <span>
+            Made by <strong>{CREATOR_NAME}</strong>
+          </span>
         </a>
 
         {/* Target Platform Settings Dropdown */}
@@ -127,17 +174,27 @@ export default function Header({
             onClick={() => setShowTargets((v) => !v)}
             aria-expanded={showTargets}
             aria-haspopup="true"
-            title="Configure target platforms"
-          >
+            title="Configure target platforms">
             <SettingsIcon />
-            <span className="target-platform-summary">{activeTargets.join(" · ") || "No targets"}</span>
-            <span className={`target-chevron ${showTargets ? "target-chevron-open" : ""}`} aria-hidden="true">▾</span>
+            <span className="target-platform-summary">
+              {activeTargets.join(" · ") || "No targets"}
+            </span>
+            <span
+              className={`target-chevron ${showTargets ? "target-chevron-open" : ""}`}
+              aria-hidden="true">
+              ▾
+            </span>
           </button>
 
           {showTargets && (
-            <div className="target-platform-dropdown" role="menu" aria-label="Target platform settings">
+            <div
+              className="target-platform-dropdown"
+              role="menu"
+              aria-label="Target platform settings">
               <div className="target-section">
-                <div className="target-section-label"><AndroidSmIcon /> Android</div>
+                <div className="target-section-label">
+                  <AndroidSmIcon /> Android
+                </div>
                 {(
                   [
                     ["legacy", "Legacy Launcher"],
@@ -151,7 +208,9 @@ export default function Header({
                     <input
                       type="checkbox"
                       checked={project.android[key]}
-                      onChange={(e) => onChangeAndroid({ [key]: e.target.checked })}
+                      onChange={(e) =>
+                        onChangeAndroid({ [key]: e.target.checked })
+                      }
                     />
                     <span>{label}</span>
                   </label>
@@ -159,7 +218,9 @@ export default function Header({
               </div>
 
               <div className="target-section">
-                <div className="target-section-label"><AppleSmIcon /> iOS</div>
+                <div className="target-section-label">
+                  <AppleSmIcon /> iOS
+                </div>
                 {(
                   [
                     ["enabled", "Default AppIcon"],
@@ -179,7 +240,9 @@ export default function Header({
               </div>
 
               <div className="target-section">
-                <div className="target-section-label"><GlobeSmIcon /> Web</div>
+                <div className="target-section-label">
+                  <GlobeSmIcon /> Web
+                </div>
                 <label className="target-option">
                   <input
                     type="checkbox"
@@ -198,9 +261,16 @@ export default function Header({
           className="btn-primary header-download-btn"
           onClick={onDownload}
           disabled={generating || !hasSource}
-          aria-label={generating ? "Generating icons..." : "Download icon ZIP bundle"}
-          title={!hasSource ? "Upload a logo first" : generating ? "Generating..." : "Download ZIP"}
-        >
+          aria-label={
+            generating ? "Generating icons..." : "Download icon ZIP bundle"
+          }
+          title={
+            !hasSource
+              ? "Upload a logo first"
+              : generating
+                ? "Generating..."
+                : "Download ZIP"
+          }>
           <DownloadIcon />
           <span>{generating ? "Generating…" : "Download ZIP"}</span>
         </button>
@@ -210,8 +280,7 @@ export default function Header({
           onClick={onToggleTheme}
           aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
           title={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
-          type="button"
-        >
+          type="button">
           {theme === "dark" ? <SunIcon /> : <MoonIcon />}
         </button>
       </div>
